@@ -1,0 +1,27 @@
+---
+import "../styles/global.css"; // Import Tailwind
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import About from "../components/About.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{Astro.props.title || "My Simple Blog"}</title>
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="My Simple Blog RSS Feed"
+      href="/rss.xml"
+    />
+  </head>
+  <body class="font-sans">
+    <!-- Main Content and Sidebar -->
+    <Header />
+    <slot />
+    <Footer />
+  </body>
+</html>
