@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPathsResult, GetStaticPathsOptions, Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
-import BlogPost from "../../layouts/BlogPost.astro";
+import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions): Promise<GetStaticPathsResult> {
@@ -26,7 +26,7 @@ type Props = {
 // since we're now using post.data.pubDate.toDateString() directly
 ---
 
-<BlogPost>
+<Base>
   <main class="max-w-6xl mx-auto px-4 py-6">
     <section>
       <div class="flex flex-col gap-4 mb-8">
@@ -46,7 +46,7 @@ type Props = {
                 </p>
                 <h3 class="text-xl font-semibold">
                   <a
-                    href={`/blog/${post.id}`}
+                    href={`/blogs/${post.id}`}
                     class="hover:text-blue-800 hover:underline"
                   >
                     {post.data.title}
@@ -89,7 +89,7 @@ type Props = {
         <div class="flex space-x-1">
           {Array.from({ length: page.lastPage }).map((_, i) => (
             <a
-              href={i === 0 ? '/blog' : `/blog/${i + 1}`}
+              href={i === 0 ? '/blogs' : `/blogs/${i + 1}`}
               class={`w-10 h-10 flex items-center justify-center rounded-md ${
                 page.currentPage === i + 1
                   ? 'bg-blue-600 text-white'
@@ -122,4 +122,4 @@ type Props = {
       </div>
     </section>
   </main>
-</BlogPost>
+</Base>
