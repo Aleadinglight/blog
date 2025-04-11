@@ -1,0 +1,125 @@
+---
+import type { GetStaticPathsResult, GetStaticPathsOptions, Page } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import BlogPost from "../../layouts/BlogPost.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions): Promise<GetStaticPathsResult> {
+  const allPosts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+  );
+  
+  // Generate pages with 9 posts per page
+  return paginate(allPosts, { pageSize: 5 });
+}
+
+// The page data is available through the props
+const { page } = Astro.props;
+
+// TypeScript type for the page prop
+type Props = {
+  page: Page<CollectionEntry<"blog">>;
+};
+
+// Simple date formatter function
+// Using built-in toDateString() instead of custom formatDate function
+// since we're now using post.data.pubDate.toDateString() directly
+---
+
+<BlogPost>
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <section>
+      <div class="flex flex-col gap-4 mb-8">
+        {
+          page.data.map((post) => (
+            <article class="my-1 p-4 flex flex-col sm:flex-row gap-4 border-b border-gray-300">
+              {post.data.heroImage && (
+                <img
+                  src={post.data.heroImage}
+                  alt={post.data.title}
+                  class="w-full sm:w-40 h-40 object-cover rounded-md"
+                />
+              )}
+              <div class="flex-1">
+                <p class="text-gray-500 text-sm mt-1">
+                  {post.data.pubDate.toDateString()}
+                </p>
+                <h3 class="text-xl font-semibold">
+                  <a
+                    href={`/blog/${post.id}`}
+                    class="hover:text-blue-800 hover:underline"
+                  >
+                    {post.data.title}
+                  </a>
+                </h3>
+                <p class="text-gray-700">{post.data.description}</p>
+                {post.data.tags && (
+                  <p class="text-gray-500 text-sm mt-1">
+                    {post.data.tags.map((tag, index) => (
+                      <span
+                        class="inline-flex ml-1 items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </p>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      {/* Pagination Controls */}
+      <nav class="flex justify-center items-center space-x-2 my-8" aria-label="Pagination">
+        {/* Previous Page Button */}
+        <a 
+          href={page.url.prev}
+          class={`px-4 py-2 rounded-md ${
+            !page.url.prev 
+              ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+              : 'bg-blue-600 text-white hover:bg-blue-700'
+          }`}
+          aria-disabled={!page.url.prev}
+        >
+          Previous
+        </a>
+
+        {/* Page Numbers */}
+        <div class="flex space-x-1">
+          {Array.from({ length: page.lastPage }).map((_, i) => (
+            <a
+              href={i === 0 ? '/blog' : `/blog/${i + 1}`}
+              class={`w-10 h-10 flex items-center justify-center rounded-md ${
+                page.currentPage === i + 1
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
+              }`}
+              aria-current={page.currentPage === i + 1 ? 'page' : undefined}
+            >
+              {i + 1}
+            </a>
+          ))}
+        </div>
+
+        {/* Next Page Button */}
+        <a 
+          href={page.url.next}
+          class={`px-4 py-2 rounded-md ${
+            !page.url.next 
+              ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
+              : 'bg-blue-600 text-white hover:bg-blue-700'
+          }`}
+          aria-disabled={!page.url.next}
+        >
+          Next
+        </a>
+      </nav>
+
+      {/* Post count information */}
+      <div class="text-center text-gray-600 text-sm">
+        Showing posts {page.start + 1}-{Math.min(page.end, page.total)} of {page.total}
+      </div>
+    </section>
+  </main>
+</BlogPost>
