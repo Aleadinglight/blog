@@ -3,19 +3,32 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { render } from 'astro:content';
 
+// This function is called at build time to generate static paths for each blog post
+// It fetches all blog posts from the collection and generates a path for each one
+// The paths are used to create static pages for each blog post
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
+	
 	return posts.map((post) => ({
 		params: { slug: post.id },
 		props: post,
 	}));
 }
-type Props = CollectionEntry<'blog'>;
 
+// This is the type of the props passed to the page
+type Props = CollectionEntry<'blog'>;
 const post = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 ---
 
-<BlogPost {...post.data}>
-	<Content />
+<BlogPost 
+  title={post.data.title}
+  description={post.data.description}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  heroImage={post.data.heroImage}
+  tags={post.data.tags}
+  headings={headings}
+>
+  <Content />
 </BlogPost>
