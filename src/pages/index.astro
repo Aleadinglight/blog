@@ -2,8 +2,10 @@
 import Base from "../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import About from "../components/About.astro";
+import { Newspaper } from '@lucide/astro';
+
 // Pagination configuration
-const POSTS_PER_PAGE = 3;
+const POSTS_PER_PAGE = 5;
 
 const allPosts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
@@ -15,33 +17,30 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
 <Base title="Home">
   <div class="max-w-6xl mx-auto p-4 flex flex-col lg:flex-row gap-6">
     <!-- Main Content -->
-    <main class="flex-1">
-      <h2 class="text-2xl font-bold mb-4 pl-4">Latest Posts</h2>
+    <main class="flex-1 p-4">
+      
+      <span class="flex items-center text-gray-800">
+        <Newspaper stroke-width={2} />
+        <h2 class="text-xl font-bold pl-1">Latest Posts</h2>
+      </span>
       <div class="space-y-6">
         {
           posts.map((post) => (
-            <article class="my-1 p-4 rounded-lg flex flex-col sm:flex-row gap-4 border border-transparent hover:border-gray-300">
-              {post.data.heroImage && (
-                <img
-                  src={post.data.heroImage}
-                  alt={post.data.title}
-                  class="w-full sm:w-40 h-40 object-cover rounded-md"
-                />
-              )}
+            <article class="my-0 p-4 rounded-lg flex flex-col sm:flex-row gap-4 border border-transparent hover:border-gray-300">
               <div class="flex-1">
-                <p class="text-gray-500 text-sm mt-1">
+                <p class="text-gray-600 text-sm mt-1 italic font-semibold">
                   {post.data.pubDate.toDateString()}
                 </p>
-                <h3 class="text-xl font-semibold">
+                <h3 class="text-xl font-semibold text-gray-800">
                   <a
-                    href={`/blogs/${post.id}`}
+                    href={`/blog/${post.id}`}
                     class="hover:text-blue-800 hover:underline"
                   >
                     {post.data.title}
                   </a>
                 </h3>
 
-                <p class="text-gray-700">{post.data.description}</p>
+                <p class="text-gray-600">{post.data.description}</p>
                 {post.data.tags && (
                   <p class="text-gray-500 text-sm mt-1">
                     {post.data.tags.map((tag, index) => (
@@ -60,7 +59,7 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
         }
       </div>
       <article class="my-1 py-2 rounded-lg text-right flex flex-col sm:flex-row gap-4 border border-transparent hover:border-gray-300">
-        <a href={`/blogs/`}
+        <a href={`/blog/`}
           class="hover:text-blue-800 underline italic pl-4">
           Read more
         </a>

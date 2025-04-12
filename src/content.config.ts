@@ -16,4 +16,15 @@ const blog = defineCollection({
 	}),
 });
 
-export const collections = { blog };
+const quotes = defineCollection({
+  type: 'data', // For JSON data files
+  schema: z.array(
+    z.object({
+      text: z.string(),
+      source: z.string(),
+      url: z.string().url().optional(),
+    })
+	),
+});
+
+export const collections = { blog, quotes };

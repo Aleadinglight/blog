@@ -1,12 +1,61 @@
+--- 
+import { MessageSquareQuote, SquareTerminal } from '@lucide/astro'; 
+import { getCollection } from 'astro:content';
+
+// Explicitly type the collection result
+const quotesCollection = await getCollection('quotes');
+console.log(quotesCollection[0].data)
+
+type Quote = {
+  text: string;
+  source: string;
+  url?: string;
+};
+
+// Access the data from the first item in the collection
+const quotes = quotesCollection[0].data as Quote[];
+
+// Function to get random items from an array without duplicates
+function getRandomItems(array: Quote[], count: number) {
+  const shuffled = [...array].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, Math.min(count, array.length));
+}
+
+// Select 3 random quotes
+const randomQuotes = getRandomItems(quotes, 3)
+---
+
 <!-- Sidebar -->
 <aside class="w-full lg:w-80">
   <div class="p-4 rounded-lg">
     <div class="flex items-center space-x-4">
-      
       <div>
-        <h3 class="text-lg font-semibold">The author</h3>
+        <span class="flex items-center text-gray-800">
+          <SquareTerminal stroke-width={2} />
+          <h2 class="text-xl font-semibold pl-1">The Author</h2>
+        </span>
         <p class="text-sm text-gray-600">He is a citizen. He is a mammoth. He goes by many names. He writes about tech and ideas.</p>
       </div>
     </div>
   </div>
+  
+  <!-- Quote Section -->
+<div class="p-4 mt-6 rounded-lg">
+  <span class="flex items-center text-gray-800">
+    <MessageSquareQuote stroke-width={2} />
+    <h2 class="text-xl font-semibold pl-1">Between the Lines</h2>
+  </span>
+  
+  {randomQuotes.map((quote) => (
+    <div class="mt-4 flex items-center">
+      <div>
+        <a href={quote.url}
+          class="hover:text-blue-800 hover:underline text-gray-500 italic">
+            "{quote.text}"
+        </a>
+        <p class="text-xs italic text-gray-500 mt-1 text-right">from {quote.source}</p>
+      </div>
+    </div>
+  ))}
+</div>
 </aside>
