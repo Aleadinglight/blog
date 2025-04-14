@@ -2,14 +2,23 @@
 ---
 
 <header class="bg-gray-50 p-2 border-b border-gray-200">
-  <nav class="flex flex-wrap items-center justify-between max-w-6xl mx-auto">
-    <h1 class="text-xl font-bold">
-      <a href="/" class="text-gray-700 hover:text-blue-600">citizenmammoth_</a>
-    </h1>
-    <div class="flex flex-wrap space-x-4 mt-2 sm:mt-0">
-      <a href="/" class="text-gray-700 font-bold hover:text-blue-600 px-2 py-1">Home</a>
-      <a href="/blog" class="text-gray-700 font-bold hover:text-blue-600 px-2 py-1">Blog</a>
-      <a href="/rss.xml" class="text-gray-700 font-bold hover:text-blue-600 px-2 py-1">RSS</a>
+  <nav class="flex flex-wrap items-center justify-start max-w-6xl mx-auto gap-4">
+    <!-- Left group: Logo + Nav Links -->
+    <div class="flex items-center flex-wrap space-x-4">
+      <h1 class="text-lg font-bold">
+        <a href="/" class="text-gray-700">citizenmammoth_</a>
+      </h1>
+      <a href="/blog" class="text-gray-700 font-bold px-2 py-1 m-0">Blog</a>
+      <a href="/overview" class=" text-gray-700 font-bold px-2 py-1">Overview</a>
+    </div>
+
+    <!-- Right: Search Bar -->
+    <div class="w-full sm:w-auto flex justify-start sm:justify-end">
+      <input
+        type="text"
+        placeholder="Search..."
+        class="w-full sm:w-72 px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-200"
+      />
     </div>
   </nav>
 </header>
