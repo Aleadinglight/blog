@@ -36,10 +36,14 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
                   </a>
                 </h3>
                 <span class="flex text-gray-600 items-center">
-                  <CalendarDays 
-                    size={16}
-                    stroke-width={2} />
-                  <p class="pl-1 mt-1 text-sm">{post.data.pubDate.toDateString()}</p>
+                  <CalendarDays size={16} stroke-width={2} />
+                  <p class="pl-1 text-sm">
+                    {post.data.pubDate.toLocaleDateString("en-us", {
+                      year: "numeric",
+                      month: "long",
+                      day: "2-digit",
+                    })}
+                  </p>
                 </span>
                 <p class="text-gray-600">{post.data.description}</p>
                 {post.data.tags && (

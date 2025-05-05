@@ -8,6 +8,18 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://example.com',
   integrations: [mdx(), sitemap()],
+  
+  markdown: {
+    syntaxHighlight: 'shiki',
+    shikiConfig: {
+      themes: {
+        light: 'catppuccin-latte',
+        dark: 'github-dark'  // Optional: add dark mode support
+      },
+      defaultColor: 'light',
+      wrap: true
+    }
+  },
 
   vite: {
     plugins: [tailwindcss()],

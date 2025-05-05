@@ -1,15 +1,10 @@
 ---
-title: 'Build my own cloud storage on Pi4 '
-description: "Well, I'm not paying for something I can create myself."
+title: 'Building a Cloud Storage on my Raspberry Pi'
+description: "Take control of your data with a DIY cloud storage solution that's private, customizable, and surprisingly powerful."
 pubDate: 'Jun 19 2024'
 heroImage: '/blog-placeholder-1.jpg'
 tags: ['case-study','engineering']
 ---
-
-# Building Your Own Cloud Storage on Raspberry Pi 4
-
-*Take control of your data with a DIY cloud storage solution that's private, customizable, and surprisingly powerful.*
-
 
 ## Why Build Your Own Cloud Storage?
 
@@ -26,8 +21,7 @@ I wanted a system that hit these key points:
 - **Intuitive**: A clean web interface for uploads, downloads, and browsing
 - **Folder-based**: Organized just like the file systems we're all used to
 
-Most importantly, I wanted to leverage my existing knowledge of JavaScript/TypeScript and Go to build something robust without reinventing the wheel.
-
+Most importantly, I wanted to leverage my existing knowledge of JavaScript/TypeScript and the current state of technology for this.
 ## Choosing the Right Tech Stack
 
 After exploring several options, I settled on a powerful combination:

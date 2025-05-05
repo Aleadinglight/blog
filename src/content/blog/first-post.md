@@ -1,7 +1,7 @@
 ---
-title: 'Building my own blog'
+title: 'Essential components in a blog'
 description: 'Lorem ipsum dolor sit amet'
-pubDate: 'Jul 08 2024'
+pubDate: '2025-02-05'
 heroImage: '/blog-placeholder-3.jpg'
 ---
 
