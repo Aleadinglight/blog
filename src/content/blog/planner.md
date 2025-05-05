@@ -7,10 +7,10 @@ tags:
   - guide
   - astro
 ---
-
-# Case study: template and stuffs
-
 ## Layouts
+The original motivation for the creation of Bloom filters is efficient set membership, using a probabilistic approach to significantly reduce the time and space required to reject items that are not members in a certain set.
+
+The data structure was proposed by Burton Bloom in a 1970 paper titled "Space/Time Trade-offs in Hash Coding with Allowable Errors". It's a good paper that's worth reading.
 
 ### Base
 - Contains Header, Footer and Navbar
