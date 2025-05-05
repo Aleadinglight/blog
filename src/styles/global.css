@@ -4,4 +4,5 @@
 /* Smooth scrolling behavior for the entire document */
 html {
   scroll-behavior: smooth;
+  font-family: sans-serif;
 }
