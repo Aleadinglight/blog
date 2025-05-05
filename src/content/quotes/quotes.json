@@ -5,18 +5,13 @@
     "url": "https://example.com"
   },
   {
-    "text": "I have not failed. I've just found 10,000 ways that won't work.",
-    "source": "Thomas Edison",
-    "url": "https://example2.com"
+    "text": "Fortune favors the ones who dare.",
+    "source": "Virgil",
+    "url": "https://en.wikipedia.org/wiki/Fortune_favours_the_bold"
   },
   {
-    "text": "I have not failed. I've just found 10,000 ways that won't work.",
-    "source": "Thomas Edison",
-    "url": "https://example2.com"
-  },
-  {
-    "text": "I have not failed. I've just found 10,000 ways that won't work.",
-    "source": "Thomas Edison",
-    "url": "https://example2.com"
+    "text": "Get busy living or get busy dying.",
+    "source": "The Shawshank Redemption",
+    "url": "https://www.youtube.com/watch?v=gNQEy8cONfw"
   }
 ]
