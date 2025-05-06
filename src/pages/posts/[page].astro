@@ -3,6 +3,7 @@ import type { GetStaticPathsResult, GetStaticPathsOptions, Page } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
+import { SITE_ROOT } from '../../consts';
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions): Promise<GetStaticPathsResult> {
   const allPosts = (await getCollection("posts")).sort(
@@ -46,7 +47,7 @@ type Props = {
                 </p>
                 <h3 class="text-xl font-semibold">
                   <a
-                    href={`/posts/${post.id}`}
+                    href={`${SITE_ROOT}/posts/${post.id}`}
                     class="hover:text-blue-800 hover:underline"
                   >
                     {post.data.title}
@@ -89,7 +90,7 @@ type Props = {
         <div class="flex space-x-1">
           {Array.from({ length: page.lastPage }).map((_, i) => (
             <a
-              href={i === 0 ? '/posts' : `/posts/${i + 1}`}
+              href={i === 0 ? `${SITE_ROOT}/posts` : `${SITE_ROOT}/posts/${i + 1}`}
               class={`w-10 h-10 flex items-center justify-center rounded-md ${
                 page.currentPage === i + 1
                   ? 'bg-blue-600 text-white'

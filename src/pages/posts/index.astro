@@ -1,5 +1,6 @@
 ---
 // This file ensures `/posts` routes to the first page
+import { SITE_ROOT } from "../../consts";
 ---
 
-<meta http-equiv="refresh" content="0;url=/posts/1" />
+<meta http-equiv="refresh" content=`0;url=${SITE_ROOT}/posts/1` />

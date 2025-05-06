@@ -3,6 +3,7 @@ import Base from "../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import About from "../components/About.astro";
 import { Newspaper, CalendarDays } from "@lucide/astro";
+import { SITE_ROOT } from "../consts";
 
 // Pagination configuration
 const POSTS_PER_PAGE = 5;
@@ -29,7 +30,7 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
               <div class="flex-1">
                 <h3 class="text-xl font-semibold text-gray-800">
                   <a
-                    href={`/posts/${post.id}`}
+                    href={`${SITE_ROOT}/posts/${post.id}`}
                     class="hover:text-blue-800 hover:underline"
                   >
                     {post.data.title}

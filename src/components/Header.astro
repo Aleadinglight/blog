@@ -1,15 +1,14 @@
 ---
+import { SITE_ROOT } from "../consts";
 ---
-
 <header class="bg-gray-50 p-2 border-b border-gray-200">
   <nav class="flex flex-wrap items-center justify-start max-w-6xl mx-auto gap-4">
     <!-- Left group: Logo + Nav Links -->
     <div class="flex items-center flex-wrap space-x-4">
       <h1 class="text-lg font-bold">
-        <a href="/" class="text-gray-700">citizenmammoth_</a>
+        <a href=`${SITE_ROOT}` class="text-gray-700">citizenmammoth_</a>
       </h1>
-      <a href="/posts" class="text-gray-700 font-bold px-2 py-1 m-0">Posts</a>
-      <a href="/overview" class=" text-gray-700 font-bold px-2 py-1">Overview</a>
+      <a href=`${SITE_ROOT}/posts` class="text-gray-700 font-bold px-2 py-1 m-0">Posts</a>
     </div>
   </nav>
 </header>
