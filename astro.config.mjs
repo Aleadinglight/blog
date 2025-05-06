@@ -14,7 +14,7 @@ export default defineConfig({
     syntaxHighlight: 'shiki',
     shikiConfig: {
       themes: {
-        light: 'catppuccin-latte',
+        light: 'one-light', // Optional: add light mode support
         dark: 'github-dark'  // Optional: add dark mode support
       },
       defaultColor: 'light',
