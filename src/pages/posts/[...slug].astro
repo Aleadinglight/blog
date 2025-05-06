@@ -3,11 +3,11 @@ import { type CollectionEntry, getCollection } from 'astro:content';
 import BlogPost from '../../layouts/BlogPost.astro';
 import { render } from 'astro:content';
 
-// This function is called at build time to generate static paths for each blog post
-// It fetches all blog posts from the collection and generates a path for each one
-// The paths are used to create static pages for each blog post
+// This function is called at build time to generate static paths for each posts post
+// It fetches all posts posts from the collection and generates a path for each one
+// The paths are used to create static pages for each posts post
 export async function getStaticPaths() {
-	const posts = await getCollection('blog');
+	const posts = await getCollection('posts');
 	
 	return posts.map((post) => ({
 		params: { slug: post.id },
@@ -16,7 +16,7 @@ export async function getStaticPaths() {
 }
 
 // This is the type of the props passed to the page
-type Props = CollectionEntry<'blog'>;
+type Props = CollectionEntry<'posts'>;
 const post = Astro.props;
 const { Content, headings } = await render(post);
 ---

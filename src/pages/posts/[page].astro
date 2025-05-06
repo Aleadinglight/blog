@@ -5,7 +5,7 @@ import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions): Promise<GetStaticPathsResult> {
-  const allPosts = (await getCollection("blog")).sort(
+  const allPosts = (await getCollection("posts")).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
   
@@ -18,7 +18,7 @@ const { page } = Astro.props;
 
 // TypeScript type for the page prop
 type Props = {
-  page: Page<CollectionEntry<"blog">>;
+  page: Page<CollectionEntry<"posts">>;
 };
 
 // Simple date formatter function
@@ -46,7 +46,7 @@ type Props = {
                 </p>
                 <h3 class="text-xl font-semibold">
                   <a
-                    href={`/blog/${post.id}`}
+                    href={`/posts/${post.id}`}
                     class="hover:text-blue-800 hover:underline"
                   >
                     {post.data.title}
@@ -89,7 +89,7 @@ type Props = {
         <div class="flex space-x-1">
           {Array.from({ length: page.lastPage }).map((_, i) => (
             <a
-              href={i === 0 ? '/blog' : `/blog/${i + 1}`}
+              href={i === 0 ? '/posts' : `/posts/${i + 1}`}
               class={`w-10 h-10 flex items-center justify-center rounded-md ${
                 page.currentPage === i + 1
                   ? 'bg-blue-600 text-white'
