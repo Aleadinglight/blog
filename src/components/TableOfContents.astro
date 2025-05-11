@@ -51,7 +51,7 @@ const tocHeadings = organizeHeadings(headings);
 {
   variant === "mobile" && tocHeadings.length > 0 && (
     <div class="mobile-toc">
-      <details class="bg-gray-50 p-4 rounded-lg">
+      <details class="bg-gray-100 p-4 rounded-lg">
         <summary class="text-lg font-semibold cursor-pointer">
           On this page
         </summary>
@@ -61,17 +61,17 @@ const tocHeadings = organizeHeadings(headings);
               <li
                 class={
                   heading.depth === 2
-                    ? "pl-0"
+                    ? "pl-4"
                     : heading.depth === 3
-                      ? "pl-4"
+                      ? "pl-6"
                       : heading.depth === 4
-                        ? "pl-6"
-                        : "pl-9"
+                        ? "pl-8"
+                        : "pl-10"
                 }
               >
                 <a
                   href={`#${heading.slug}`}
-                  class="hover:text-blue-600 inline-block py-1 text-sm"
+                  class="hover:text-blue-600 inline-block py-1"
                 >
                   {heading.text}
                 </a>

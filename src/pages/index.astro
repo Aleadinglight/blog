@@ -21,14 +21,14 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
     <main class="flex-1 p-4">
       <span class="flex items-center text-gray-800">
         <Newspaper stroke-width={2} />
-        <h2 class="text-2xl font-bold pl-1">Latest Posts</h2>
+        <h2 class="text-xl font-bold pl-1">Latest Posts</h2>
       </span>
       <div class="space-y-6 pt-2">
         {
           posts.map((post) => (
             <article class="my-0 py-2 px-4 rounded-lg flex flex-col sm:flex-row gap-4 border border-transparent">
               <div class="flex-1">
-                <h3 class="text-xl font-semibold text-gray-800">
+                <h3 class="text-lg font-semibold text-gray-800">
                   <a
                     href={`${SITE_ROOT}/posts/${post.id}`}
                     class="hover:text-blue-800 hover:underline"
