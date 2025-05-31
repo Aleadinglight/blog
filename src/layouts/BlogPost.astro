@@ -48,12 +48,14 @@ const formattedPubDate = pubDate.toLocaleDateString("en-us", {
           <TableOfContents headings={headings} variant="mobile" />
         </div>
         <article
-          class="prose lg:prose-xl prose-img:rounded-xl
+          class="prose lg:prose-xl 
             prose-h1:text-4xl prose-h1:font-bold prose-h1:mb-2 prose-h1:mt-4
             prose-h2:text-3xl prose-h2:font-semibold prose-h2:mb-2 prose-h2:mt-4
             prose-h3:text-2xl prose-h3:font-semibold prose-h3:mb-2 prose-h3:mt-4
-            prose-li:mb-0 prose-li:mt-0
-            prose-p:leading-normal prose-p:mb-4 prose-p:mt-0
+            prose-li:mb-0 prose-li:mt-0 
+            prose-a:text-orange-700 prose-a:underline prose-a:decoration-2
+            prose-p:leading-normal prose-p:mb-4 prose-p:mt-0 prose-p:text-black
+            prose-blockquote:text-blue-700
             prose-pre:border prose-pre:border-neutral-300
             max-w-none"
         >
@@ -64,16 +66,10 @@ const formattedPubDate = pubDate.toLocaleDateString("en-us", {
 
         <div class="mb-8">
           {
-            description && (
-              <p class="text-xl text-gray-600 mb-4">{description}</p>
-            )
-          }
-
-          {
             tags && tags.length > 0 && (
               <div class="flex flex-wrap gap-2 mb-6">
                 {tags.map((tag: string) => (
-                  <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                  <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 font-medium text-gray-600 ring-1 ring-inset ring-blue-700/10">
                     {tag}
                   </span>
                 ))}
