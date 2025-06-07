@@ -6,3 +6,8 @@ html {
   scroll-behavior: smooth;
   font-family: sans-serif;
 }
+ 
+/* Custom fix for inline-code */
+code:not(pre > code) {
+	@apply bg-gray-200 before:content-none after:content-none px-1.5 py-1 rounded-sm whitespace-break-spaces
+}
