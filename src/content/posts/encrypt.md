@@ -24,14 +24,10 @@ I think there are a few reasons why this issue is surfacing in my mind lately.
 
 I've been moving my data between platforms more lately: email, messaging apps, cloud storage. Personally, I trust the platform, but not the people behind it. A blackbox service, with system admins holding too much access, and we're functioning with the hope that they won't abuse their power - a system built on trust alone.
 
-> Trust no one
->- The X-files
-
-Although I can't control who sees my data on these platforms, I can control what they see: encrypted files that are meaningless to plain eyes.
+Sadly, I can't control who sees my data on these platforms. However, I can control what they see, and I'm just gonna make it harder for them to get me.
 
 ### Why do I care, if I don't have anything to hide
-*But I didn't do anything wrong. Why would I need to do that if I am innocent?* Yeah alright, alright, I know! This phrase comes up in every privacy debate, and there is [a very good study on this.](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=998565&)
-My take is simple: You lock your doors, right? That's privacy in action. If you care enough to lock your physical space, you should care enough to lock your digital life.
+*But I didn't do anything wrong. Why would I need to do that if I am innocent?* Yeah alright, alright, I know! This phrase comes up in every privacy debate, and there is [a very good study on this.](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=998565&). Maybe in another article, we'll talk more on this. Since you're here already, let's move on to the next topic.
 
 ## Different Encryption Methods
 There are two main approaches to encryption, each with distinct use cases:
@@ -49,10 +45,9 @@ Examples: [GPG/PGP](https://gnupg.org/), [RSA](https://en.wikipedia.org/wiki/RSA
 
 ![Asymmetric encryption](../../data/asymmetric.png "image title")
 
-## How to use the encryption tools
-Here is the good news, you don't need to dig into the technical details of how the encryption algorithm works or understand its mathematical proof. You just need to know a few common encryption methods and decide what fits your use case. There are several tools will handle to work for you.
+Here is the good news, you don't need to dig into the technical details of how the encryption algorithm works or understand its mathematical proof. You just need to know a few common encryption methods and decide what fits your use case. There are several tools will handle the heavy work for you.
 
-### OpenSSL for symmetric encryption
+## Using OpenSSL for symmetric encryption
 The OpenSSL software library is a robust, commercial-grade, full-featured toolkit for general-purpose cryptography and secure communication. Let's see a simple symmetric encryption process using OpenSSL.
 
 The `openssl` usually comes pre-installed in most Linux distributions.
@@ -88,7 +83,7 @@ $ openssl enc -d -ciphername -in encrypted.data -out un_encrypted.data
 - When refering to the "password", we are talking about the your "private key".
 - Critical point: decryption requires the exact same settings (flags) you used for encryption. Change one flag, and your data stays locked. So you better remember, not just your private key, but the entire command with all its flags that you used to encrypt your data.
 
-   
+### Real life example with OpenSSL    
 Let's look at a real life example: you have a file `myfile.txt` that you need to encrypt. The whole process looks like this:
 
 ```shell
@@ -108,12 +103,18 @@ $ cat decrypted.out
 This is a message
 ```
 
-And once again, *you must use the same encryption parameters when decrypting*. Document your full command if you must.
+And once again, *you must use the same encryption parameters when decrypting*. It might be a good idea to document your full command history.
 
-### GPG for asymetric encryption
+## Using GPG for asymetric encryption
 GPG ([GNU Privacy Guard](https://en.wikipedia.org/wiki/GNU_Privacy_Guard), not to be confused with [Pretty Good Privacy](https://en.wikipedia.org/wiki/Pretty_Good_Privacy)) is the free, open-source implementation of the OpenPGP standard for public-key cryptography. It's a complete toolkit for public-key cryptography that handles the complex hybrid encryption process automatically. In this guide, we will walk through some core functionality: keypair creation, exchanging and verifying keys, encrypting and decrypting documents, and authenticating documents with digital signatures.
 
-First, you need to generate your key pair (both public and private keys)
+There are generally 4 key ideas that you need to be familiar with:
+- How to generate your own key pair (public + private)
+- How to send your key pair to the receiver.
+- How to import the public key of the receiver.
+- How to encrypt the file using the receiver's public key.
+
+First, you need to know how to generate your key pair (both public and private keys)
 
 ```shell
 $ gpg --gen-key
@@ -135,7 +136,7 @@ uid           [ultimate] real name <email.address@test.com>
 sub   cv25519 2025-05-24 [E] [expires: 2028-05-23]
 ```
 
-To send your public key to a correspondent you must first export it, this is done using the `--export` command. Use the `uid` email to specify the public key you want.
+In order to send your public key to your contact, you must first export it to a file. This is done using the flag `--export` with specific email of the key.
 
 ```shell
 $ gpg --export email.address@test.com --output my_public_key.gpg
@@ -153,23 +154,47 @@ $ gpg --export --armor email.address@test.com
 $ gpg --export --armor email.address@test.com > my_public_key.gpg
 ```
 
-Note here that GPG's `--output` flag doesn't work with `--export`. Use the `>` redirect instead.
+Note here that GPG's `--output` flag doesn't work with `--export`, so you'll have to use the `>` redirect instead.
 
+Next, to import a public GPG key of the receiver
+```shell
+$ gpg --import receiver.gpg
+gpg: key 9E98BC16: public key imported
+gpg: Total number processed: 1
+gpg:               imported: 1
+```
 
-Let's say you have your file at `document.pdf`, to encrypt your file
+You can use the `--list-keys` command to view the imported keys too. Usually, your own keys will have the tag `[ultimate]` due to it being generated on your side, the receiver will have the tag `[unknow]` since we only have the their public key.
+
+### Real life example with GPG
+
+Let's say you are hiding the files that you just stole from CIA in `document.pdf`, to encrypt this file
 
 ```shell
-bashgpg --encrypt --recipient john@example.com document.pdf
+$ gpg --output document.gpg --encrypt --recipient receiver@email.com document.pdf
 ``` 
 
-This creates document.pdf.gpg. GPG automatically:
-- Uses John's public key to encrypt a random AES key
-- Uses that AES key to encrypt your actual file
-- Bundles everything together
+This creates `document.gpg`. GPG automatically:
+- Uses receiver's public key to encrypt a random AES key.
+- Uses that AES key to encrypt your actual file.
+- Bundles everything together.
 
-The real output
-When you run encryption, you'll see:
-bash$ gpg --encrypt --recipient john@example.com document.pdf
-gpg: checking the trustdb
-gpg: marginal trust assumed for key
-Don't panic at "marginal trust"—GPG is telling you it hasn't verified John's identity through its web of trust system.
+Note: Don't panic at "marginal trust" message. GPG is telling you it hasn't verified receiver's identity through its web of trust system.
+
+To decrypt a document you received
+```shell
+$ gpg --output doc --decrypt doc.gpg
+
+You need a passphrase to unlock the secret key for
+user: "TestUser (Executioner) <test@email.com>"
+1024-bit ELG-E key, ID 5C8CBD41, created 1999-06-04 (main key ID 9E98BC16)
+
+Enter passphrase: 
+```
+
+When a file is encrypted, GPG embeds the key ID of the recipient's public key in the encrypted file's metadata. That's why during decryption, you don't need to specify which key to use. 
+
+It's crucial to understand that even though your private key is stored by GPG, it is encrypted by your passphrase. So if you fail to remember the passphrase, your data will be locked forever.
+
+> Everything Not Saved Will Be Lost
+>- Nintendo quit screen message
