@@ -1,17 +1,19 @@
 ---
-import type { GetStaticPathsResult, GetStaticPathsOptions, Page } from 'astro';
-import type { CollectionEntry } from 'astro:content';
+import type { GetStaticPathsResult, GetStaticPathsOptions, Page } from "astro";
+import type { CollectionEntry } from "astro:content";
 import Base from "../../layouts/Base.astro";
 import { getCollection } from "astro:content";
-import { SITE_ROOT } from '../../consts';
+import { SITE_ROOT } from "../../consts";
 
-export async function getStaticPaths({ paginate }: GetStaticPathsOptions): Promise<GetStaticPathsResult> {
+export async function getStaticPaths({
+  paginate,
+}: GetStaticPathsOptions): Promise<GetStaticPathsResult> {
   const allPosts = (await getCollection("posts")).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
   );
-  
+
   // Generate pages with 9 posts per page
-  return paginate(allPosts, { pageSize: 5 });
+  return paginate(allPosts, { pageSize: 20});
 }
 
 // The page data is available through the props
@@ -28,23 +30,13 @@ type Props = {
 ---
 
 <Base>
-  <main class="max-w-6xl mx-auto px-4 py-6">
+  <main class="max-w-4xl mx-auto px-4 py-6">
     <section>
-      <div class="flex flex-col gap-4 mb-8">
+      <div class="flex flex-col gap-4 mb-8 max-w-2xl mx-auto">
         {
           page.data.map((post) => (
-            <article class="my-1 p-4 flex flex-col sm:flex-row gap-4 border-b border-gray-300">
-              {post.data.heroImage && (
-                <img
-                  src={post.data.heroImage}
-                  alt={post.data.title}
-                  class="w-full sm:w-40 h-40 object-cover rounded-md"
-                />
-              )}
+            <article class="my-1 flex flex-col sm:flex-row gap-4 ">
               <div class="flex-1">
-                <p class="text-gray-500 text-sm mt-1">
-                  {post.data.pubDate.toDateString()}
-                </p>
                 <h3 class="text-xl font-semibold">
                   <a
                     href={`${SITE_ROOT}/posts/${post.id}`}
@@ -53,18 +45,24 @@ type Props = {
                     {post.data.title}
                   </a>
                 </h3>
-                <p class="text-gray-700">{post.data.description}</p>
                 {post.data.tags && (
                   <p class="text-gray-500 text-sm mt-1">
                     {post.data.tags.map((tag, index) => (
-                      <span
-                        class="inline-flex ml-1 items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset"
-                      >
+                      <span class="inline-flex ml-1 items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">
                         {tag}
                       </span>
                     ))}
                   </p>
                 )}
+              </div>
+              <div>
+                <p class="text-gray-600 text-md">
+                  {post.data.pubDate.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                  })}
+                </p>
               </div>
             </article>
           ))
@@ -72,14 +70,17 @@ type Props = {
       </div>
 
       {/* Pagination Controls */}
-      <nav class="flex justify-center items-center space-x-2 my-8" aria-label="Pagination">
+      <nav
+        class="flex justify-center items-center space-x-2 my-8"
+        aria-label="Pagination"
+      >
         {/* Previous Page Button */}
-        <a 
+        <a
           href={page.url.prev}
           class={`px-4 py-2 rounded-md ${
-            !page.url.prev 
-              ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-              : 'bg-blue-600 text-white hover:bg-blue-700'
+            !page.url.prev
+              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
           aria-disabled={!page.url.prev}
         >
@@ -88,28 +89,32 @@ type Props = {
 
         {/* Page Numbers */}
         <div class="flex space-x-1">
-          {Array.from({ length: page.lastPage }).map((_, i) => (
-            <a
-              href={i === 0 ? `${SITE_ROOT}/posts` : `${SITE_ROOT}/posts/${i + 1}`}
-              class={`w-10 h-10 flex items-center justify-center rounded-md ${
-                page.currentPage === i + 1
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 hover:bg-gray-300 text-gray-700'
-              }`}
-              aria-current={page.currentPage === i + 1 ? 'page' : undefined}
-            >
-              {i + 1}
-            </a>
-          ))}
+          {
+            Array.from({ length: page.lastPage }).map((_, i) => (
+              <a
+                href={
+                  i === 0 ? `${SITE_ROOT}/posts` : `${SITE_ROOT}/posts/${i + 1}`
+                }
+                class={`w-10 h-10 flex items-center justify-center rounded-md ${
+                  page.currentPage === i + 1
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 hover:bg-gray-300 text-gray-700"
+                }`}
+                aria-current={page.currentPage === i + 1 ? "page" : undefined}
+              >
+                {i + 1}
+              </a>
+            ))
+          }
         </div>
 
         {/* Next Page Button */}
-        <a 
+        <a
           href={page.url.next}
           class={`px-4 py-2 rounded-md ${
-            !page.url.next 
-              ? 'bg-gray-200 text-gray-500 cursor-not-allowed' 
-              : 'bg-blue-600 text-white hover:bg-blue-700'
+            !page.url.next
+              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
+              : "bg-blue-600 text-white hover:bg-blue-700"
           }`}
           aria-disabled={!page.url.next}
         >
@@ -119,7 +124,9 @@ type Props = {
 
       {/* Post count information */}
       <div class="text-center text-gray-600 text-sm">
-        Showing posts {page.start + 1}-{Math.min(page.end, page.total)} of {page.total}
+        Showing posts {page.start + 1}-{Math.min(page.end, page.total)} of {
+          page.total
+        }
       </div>
     </section>
   </main>

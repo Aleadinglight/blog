@@ -9,3 +9,7 @@ heroImage: '/blog-placeholder-3.jpg'
 ### Searching 
 I figure that when opening a website, either it is a documentation or a blog, users oftenly are looking for some specific topics in mind. That means, they are most likely interact with the search bar.
 - [Pagefind](https://pagefind.app/)
+
+\mathbb{…}
+
+$x^2 + y^2 = z^2$s
