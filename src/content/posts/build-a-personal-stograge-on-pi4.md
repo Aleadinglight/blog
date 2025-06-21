@@ -3,7 +3,7 @@ title: 'Building a Cloud Storage on my Raspberry Pi'
 description: "Take control of your data with a DIY cloud storage solution that's private, customizable, and surprisingly powerful."
 pubDate: 'Jun 19 2024'
 heroImage: '/blog-placeholder-1.jpg'
-tags: ['case-study','engineering']
+tags: ['case-study','cloud-storage']
 ---
 
 ## Why Build Your Own Cloud Storage?

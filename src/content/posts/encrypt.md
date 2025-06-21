@@ -3,7 +3,7 @@ title: "Protecting Your Data: A Beginner's Guide"
 description: 'A quick intro on basic data encryption, and how to use command-line encryption tools.'
 pubDate: 'May 10 2025'
 heroImage: '/blog-placeholder-1.jpg'
-tags: ['ui-design','framework']
+tags: ['security','CLI tools']
 ---
 
 ## Prewords
