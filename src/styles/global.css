@@ -11,5 +11,9 @@ html {
  
 /* Custom fix for inline-code */
 code:not(pre > code) {
-	@apply bg-gray-200 before:content-none after:content-none px-1.5 py-1 rounded-sm whitespace-break-spaces
+	@apply bg-gray-100 before:content-none after:content-none px-1.5 py-1 rounded-sm whitespace-break-spaces text-red-800 font-light
+}
+
+.katex-html {
+  @apply hidden;
 }
