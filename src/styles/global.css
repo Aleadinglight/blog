@@ -1,10 +1,12 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
+@import './fonts.css';
+
 
 /* Smooth scrolling behavior for the entire document */
 html {
   scroll-behavior: smooth;
-  font-family: sans-serif;
+  font-family: "DM Sans", sans-serif;
 }
  
 /* Custom fix for inline-code */
