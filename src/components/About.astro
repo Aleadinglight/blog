@@ -25,51 +25,34 @@ function getRandomItems(array: Quote[], count: number) {
 const randomQuotes = getRandomItems(quotes, 3);
 ---
 
-<!-- Sidebar -->
-<aside class="w-full lg:w-80">
-  <div class="pt-4 pb-2 px-2 rounded-lg">
-    <div class="flex items-center space-x-4">
-      <div>
-        <span class="flex items-center text-gray-800">
-          <SquareTerminal stroke-width={2} />
-          <h2 class="text-xl font-semibold pl-1">The Author</h2>
-        </span>
-        <p class="text-gray-600 p-2">
-          Software engineer specializing in systems and web architecture. I
-          share insights on system design, open-source projects, and the
-          intersection of technology with privacy.
-        </p>
-      </div>
-    </div>
-
-    <!-- Quote Section -->
-    <div class="mt-6 rounded-lg">
-      <span class="flex items-center text-gray-800">
-        <MessageSquareQuote stroke-width={2} />
-        <h2 class="text-xl font-semibold pl-1">Between the Lines</h2>
-      </span>
-      <div class="p-2">
-        {
-          randomQuotes.map((quote, index) => (
-            <div
-              class={`mt-${index === 0 ? "4" : "6"} border-l-2 border-gray-200 pl-4`}
-            >
-              <blockquote>
-                <a
-                  href={quote.url}
-                  target="_blank"
-                  class="hover:text-blue-800 hover:underline text-gray-600 italic leading-relaxed"
-                >
-                  "{quote.text}"
-                </a>
-                <footer class="text-sm text-gray-500 mt-1">
-                  - {quote.source}
-                </footer>
-              </blockquote>
-            </div>
-          ))
-        }
-      </div>
+<div class="pt-4 pb-2 px-2 rounded-lg">
+  <!-- Quote Section -->
+  <div class="mt-6 rounded-lg">
+    <span class="flex items-center text-gray-800">
+      <MessageSquareQuote stroke-width={2} />
+      <h2 class="text-xl font-semibold pl-1">Between The Lines</h2>
+    </span>
+    <div class="p-2">
+      {
+        randomQuotes.map((quote, index) => (
+          <div
+            class={`mt-${index === 0 ? "4" : "6"} border-l-2 border-gray-200 pl-4`}
+          >
+            <blockquote>
+              <a
+                href={quote.url}
+                target="_blank"
+                class="hover:text-blue-800 hover:underline text-gray-600 italic leading-relaxed"
+              >
+                "{quote.text}"
+              </a>
+              <footer class="text-sm text-gray-500 mt-1">
+                - {quote.source}
+              </footer>
+            </blockquote>
+          </div>
+        ))
+      }
     </div>
   </div>
-</aside>
+</div>

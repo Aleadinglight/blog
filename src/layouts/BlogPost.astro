@@ -1,6 +1,6 @@
 ---
 import Base from "./Base.astro";
-import { CalendarDays } from "@lucide/astro";
+import { CalendarDays, SquareArrowOutUpRight } from "@lucide/astro";
 import TableOfContents from "../components/TableOfContents.astro";
 // Get props for the blog post
 const {
@@ -34,11 +34,16 @@ const formattedPubDate = pubDate.toLocaleDateString("en-us", {
               <span class="flex items-center">
                 <CalendarDays stroke-width={2} />
                 <p class="pl-1">
-                  Last updated on{" "}
+                  Updated on: {" "}
                   <time datetime={pubDate.toISOString()}>
                     {formattedPubDate}
                   </time>
                 </p>
+                <p class = "px-2"> | </p>
+                <SquareArrowOutUpRight stroke-width={2}/>
+                <a class="pl-1" href = 'https://github.com/Aleadinglight/blog/tree/main/src/content/posts'>
+                  View source
+                </a>
               </span>
             )
           }
