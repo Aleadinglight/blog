@@ -2,7 +2,7 @@
 import Base from "../layouts/Base.astro";
 import { getCollection } from "astro:content";
 import About from "../components/About.astro";
-import { Newspaper, CalendarDays } from "@lucide/astro";
+import { Newspaper, CalendarDays, Sparkles, LayoutList } from "@lucide/astro";
 import { SITE_ROOT } from "../consts";
 
 // Pagination configuration
@@ -21,7 +21,8 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
     <section class="w-full max-w-4xl mx-auto">
       <div class="flex-1 p-4 w-full">
         <span class="flex items-center text-gray-800">
-          <h2 class="text-xl font-bold">Features</h2>
+          <Sparkles stroke-width={2} />
+          <h2 class="text-xl font-bold pl-1">Features</h2>
         </span>
         <p class="text-gray-600 mt-2">
           Placeholder for features section. Highlight special posts, tools, or site features here.
@@ -88,7 +89,8 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
     <section class="w-full max-w-4xl mx-auto">
       <div class="flex-1 p-4 w-full">
         <span class="flex items-center text-gray-800">
-          <h2 class="text-xl font-bold">Series</h2>
+          <LayoutList stroke-width={2} />
+          <h2 class="text-xl font-bold pl-1">Series</h2>
         </span>
         <p class="text-gray-600 mt-2">
           Placeholder for series section. List ongoing or completed blog series here.

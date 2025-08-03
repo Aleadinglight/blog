@@ -1,5 +1,5 @@
 ---
-import { MessageSquareQuote, SquareTerminal } from "@lucide/astro";
+import { SquareActivity, SquareTerminal } from "@lucide/astro";
 import { getCollection } from "astro:content";
 
 // Explicitly type the collection result
@@ -25,12 +25,12 @@ function getRandomItems(array: Quote[], count: number) {
 const randomQuotes = getRandomItems(quotes, 3);
 ---
 
-<div class="pt-4 pb-2 px-2 rounded-lg">
+<div class="p-4 rounded-lg">
   <!-- Quote Section -->
-  <div class="mt-6 rounded-lg">
+  <div class="rounded-lg">
     <span class="flex items-center text-gray-800">
-      <MessageSquareQuote stroke-width={2} />
-      <h2 class="text-xl font-semibold pl-1">Between The Lines</h2>
+      <SquareActivity stroke-width={2} />
+      <h2 class="text-xl font-bold pl-1">Between The Lines</h2>
     </span>
     <div class="p-2">
       {
