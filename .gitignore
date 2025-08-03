@@ -148,3 +148,5 @@ dist/
 
 # jetbrains setting folder
 .idea/
+
+gallery.noindex/
