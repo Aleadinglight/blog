@@ -1,0 +1,52 @@
+---
+import SearchComponent from "astro-pagefind/components/Search";
+---
+
+<SearchComponent 
+  id="search" 
+  className="pagefind-ui" 
+  uiOptions={{ 
+    showImages: false,
+    bundlePath: "/blog/pagefind/",
+    processResult: (result: any) => {
+      // Fix URLs to include the base path
+      if (result.url && !result.url.startsWith('/blog')) {
+        result.url = '/blog' + result.url;
+      }
+      return result;
+    },
+    translations: {
+      placeholder: "Search posts...",
+      clear_search: "Clear",
+      load_more: "Load more results",
+      search_result_label: "Search results for",
+      filters_label: "Filters",
+      zero_results: "No results for [SEARCH_TERM]",
+      many_results: "[COUNT] results for [SEARCH_TERM]",
+      one_result: "[COUNT] result for [SEARCH_TERM]",
+      alt_search: "No results for [SEARCH_TERM]. Showing results for [DIFFERENT_TERM] instead",
+      search_suggestion: "No results for [SEARCH_TERM]. Try one of the following searches:",
+      searching: "Searching for [SEARCH_TERM]...",
+    }
+  }} 
+/>
+
+<style>
+  .search-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Custom Pagefind styles */
+  :global(.pagefind-ui) {
+    --pagefind-ui-scale: 0.8;
+    --pagefind-ui-primary: #3b82f6;
+    --pagefind-ui-text: #374151;
+    --pagefind-ui-background: #ffffff;
+    --pagefind-ui-border: #e5e7eb;
+    --pagefind-ui-tag: #f3f4f6;
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 8px;
+    --pagefind-ui-font: system-ui, sans-serif;
+  }
+</style> 

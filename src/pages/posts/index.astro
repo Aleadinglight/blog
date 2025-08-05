@@ -1,6 +1,12 @@
 ---
 // This file ensures `/posts` routes to the first page
 import { SITE_ROOT } from "../../consts";
+import Base from "../../layouts/Base.astro";
 ---
 
-<meta http-equiv="refresh" content=`0;url=${SITE_ROOT}/posts/1` />
+<Base title="Posts">
+  <meta http-equiv="refresh" content={`0;url=${SITE_ROOT}/posts/1`} />
+  <div class="text-center py-12">
+    <p class="text-gray-600">Redirecting to posts...</p>
+  </div>
+</Base>

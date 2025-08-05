@@ -48,9 +48,12 @@ type Props = {
                 {post.data.tags && (
                   <p class="text-gray-500 text-sm mt-1">
                     {post.data.tags.map((tag, index) => (
-                      <span class="inline-flex ml-1 items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset">
+                      <a
+                        href={`${SITE_ROOT}/tags/${tag}`}
+                        class="inline-flex ml-1 items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset hover:bg-blue-50 hover:text-blue-700 transition-colors"
+                      >
                         {tag}
-                      </span>
+                      </a>
                     ))}
                   </p>
                 )}
