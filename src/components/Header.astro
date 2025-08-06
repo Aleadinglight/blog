@@ -9,34 +9,28 @@ import { SITE_ROOT } from "../consts";
     <div class="flex items-center justify-between w-full">
       <a
         href={SITE_ROOT}
-        class="text-2xl font-extrabold text-gray-800 tracking-tight hover:text-blue-600 transition-colors"
+        class="text-xl md:text-2xl font-extrabold text-gray-800 tracking-tight hover:text-blue-600 transition-colors"
         >citizenmammoth_</a
       >
       <div
-        class="flex items-center gap-4 md:gap-6"
+        class="flex items-center gap-2 md:gap-4 lg:gap-6"
         style="transition:all .2s"
       >
         <a
-          href={`${SITE_ROOT}/posts`}
+          href={`${SITE_ROOT}posts`}
           class="font-semibold px-2 py-1 rounded hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm md:text-base"
         >
           Posts
         </a>
         <a
-          href={`${SITE_ROOT}/search`}
-          class="font-semibold px-2 py-1 rounded hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm md:text-base"
-        >
-          Search
-        </a>
-        <a
-          href={`${SITE_ROOT}/rss.xml`}
+          href={`${SITE_ROOT}rss.xml`}
           class="font-semibold px-2 py-1 rounded hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm md:text-base"
           title="RSS Feed"
         >
           RSS
         </a>
         <a
-          href={`${SITE_ROOT}/about`}
+          href={`${SITE_ROOT}about`}
           class="font-semibold px-2 py-1 rounded hover:bg-blue-50 hover:text-blue-700 transition-colors text-sm md:text-base"
         >
           About

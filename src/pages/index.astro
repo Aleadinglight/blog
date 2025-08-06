@@ -4,6 +4,7 @@ import { getCollection } from "astro:content";
 import About from "../components/About.astro";
 import { Newspaper, CalendarDays, Sparkles, LayoutList, Search } from "@lucide/astro";
 import { SITE_ROOT } from "../consts";
+import SearchComponent from "../components/Search.astro";
 
 // Pagination configuration
 const POSTS_PER_PAGE = 5;
@@ -23,9 +24,9 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
     </div>
   </div>
   <div class="w-full flex justify-center mb-8 px-4">
-    <a 
-      href={`${SITE_ROOT}/search`}
-      class="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-2 shadow-sm hover:shadow-md transition-shadow"
+    <button
+      id="search-trigger"
+      class="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-3 py-2 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
     >
       <input
         type="text"
@@ -36,11 +37,11 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
       <div class="p-2 text-gray-600 flex items-center justify-center">
         <Search size={18} stroke-width={2} />
       </div>
-    </a>
+    </button>
   </div>
-  <div class="max-w-6xl mx-auto p-4 flex flex-col items-center">
+  <div class="max-w-4xl mx-auto px-4">
     <!-- Features Section -->
-    <section class="w-full max-w-4xl mx-auto">
+    <section class="w-full">
       <div class="flex-1 p-4 w-full">
         <span class="flex items-center text-gray-800">
           <Sparkles stroke-width={2} />
@@ -51,9 +52,9 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
         </p>
       </div>
     </section>
-    <hr class="w-full max-w-4xl mx-auto my-2 border-gray-200" />
+    <hr class="w-full my-2 border-gray-200" />
     <!-- Latest Posts Section -->
-    <section class="w-full max-w-4xl mx-auto">
+    <section class="w-full">
       <main class="flex-1 p-4 w-full">
         <span class="flex items-center text-gray-800">
           <Newspaper stroke-width={2} />
@@ -66,7 +67,7 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
                 <div class="flex-1">
                   <h3 class="text-lg font-semibold text-gray-800">
                     <a
-                      href={`${SITE_ROOT}/posts/${post.id}`}
+                      href={`${SITE_ROOT}posts/${post.id}`}
                       class="hover:text-blue-700 hover:underline"
                     >
                       {post.data.title}
@@ -87,7 +88,7 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
                     <p class="text-gray-500 text-sm mt-1">
                       {post.data.tags.map((tag, index) => (
                         <a
-                          href={`${SITE_ROOT}/tags/${tag}`}
+                          href={`${SITE_ROOT}tags/${tag}`}
                           class="inline-flex ml-1 items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset hover:bg-blue-50 hover:text-blue-700 transition-colors"
                         >
                           {tag}
@@ -103,15 +104,15 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
         <article
           class="my-1 py-2 rounded-lg flex flex-col gap-4 border border-transparent hover:border-gray-300 w-full"
         >
-          <a href={`${SITE_ROOT}/posts/`} class="hover:text-blue-700 underline italic pl-4">
+          <a href={`${SITE_ROOT}posts/`} class="hover:text-blue-700 underline italic pl-4">
             Read more
           </a>
         </article>
       </main>
     </section>
-    <hr class="w-full max-w-4xl mx-auto my-2 border-gray-200" />
+    <hr class="w-full my-2 border-gray-200" />
     <!-- Series Section -->
-    <section class="w-full max-w-4xl mx-auto">
+    <section class="w-full">
       <div class="flex-1 p-4 w-full">
         <span class="flex items-center text-gray-800">
           <LayoutList stroke-width={2} />
@@ -122,10 +123,58 @@ const posts = allPosts.slice(0, POSTS_PER_PAGE);
         </p>
       </div>
     </section>
-    <hr class="w-full max-w-4xl mx-auto my-2 border-gray-200" />
+    <hr class="w-full my-2 border-gray-200" />
     <!-- About Section -->
-    <section class="w-full max-w-4xl mx-auto">
+    <section class="w-full">
       <About />
     </section>
   </div>
+
+  <!-- Search Modal with blurry background -->
+  <div id="search-modal" class="fixed inset-0 backdrop-blur-sm bg-white/30 hidden z-50">
+    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[80vh] overflow-hidden border border-gray-200">
+        <div class="flex items-center justify-between px-4 py-2">
+          <h2 class="text-xl font-semibold text-gray-800">Search Posts</h2>
+          <button id="close-search" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        <div class="p-4 overflow-y-auto max-h-[calc(80vh-80px)]">
+          <SearchComponent />
+        </div>
+      </div>
+    </div>
+  </div>
 </Base>
+
+<script>
+  // Modal functionality
+  const searchTrigger = document.getElementById('search-trigger');
+  const searchModal = document.getElementById('search-modal');
+  const closeSearch = document.getElementById('close-search');
+
+  searchTrigger?.addEventListener('click', () => {
+    searchModal?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  });
+
+  closeSearch?.addEventListener('click', () => {
+    searchModal?.classList.add('hidden');
+    document.body.style.overflow = '';
+  });
+
+  // Close modal when clicking outside
+  searchModal?.addEventListener('click', (e) => {
+    if (e.target === searchModal) {
+      searchModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  });
+
+  // Close modal with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !searchModal?.classList.contains('hidden')) {
+      searchModal?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  });
+</script>
