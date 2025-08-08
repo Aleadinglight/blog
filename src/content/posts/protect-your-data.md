@@ -4,6 +4,7 @@ description: 'A quick intro on basic data encryption, and how to use command-lin
 pubDate: 'May 10 2025'
 heroImage: '/blog-placeholder-1.jpg'
 tags: ['security','CLI tools']
+featured: true
 ---
 
 ## Prewords

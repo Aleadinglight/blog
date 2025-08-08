@@ -6,13 +6,15 @@ const posts = defineCollection({
 	loader: glob({ base: './src/content/posts', pattern: '**/*.{md,mdx}' }),
 	// Type-check frontmatter using a schema
 	schema: z.object({
-		title: z.string(),
-		description: z.string(),
+		title: z.string().min(1, 'title is required'),
+		description: z.string().min(1, 'description is required'),
 		// Transform string to Date object
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		heroImage: z.string().optional(),
-		tags: z.array(z.string()).optional(),
+		tags: z.array(z.string()).optional().default([]),
+		featured: z.coerce.boolean().optional().default(false),
+		featuredWeight: z.coerce.number().optional().default(0),
 	}),
 });
 
