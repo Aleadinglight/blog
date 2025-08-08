@@ -223,7 +223,7 @@ const featuredPosts = allPosts
   // Close modal with Escape key
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && !searchModal?.classList.contains('hidden')) {
-      searchModal.classList.add('hidden');
+      searchModal?.classList.add('hidden');
       document.body.style.overflow = '';
     }
   });
