@@ -13,7 +13,7 @@ export async function getStaticPaths({
   );
 
   // Generate pages with 9 posts per page
-  return paginate(allPosts, { pageSize: 20});
+  return paginate(allPosts, { pageSize: 10});
 }
 
 // The page data is available through the props
@@ -39,7 +39,7 @@ type Props = {
               <div class="flex-1">
                 <h3 class="text-xl font-semibold">
                   <a
-                    href={`${SITE_ROOT}/posts/${post.id}`}
+                    href={`${SITE_ROOT}posts/${post.id}`}
                     class="hover:text-blue-800 hover:underline"
                   >
                     {post.data.title}
@@ -96,7 +96,7 @@ type Props = {
             Array.from({ length: page.lastPage }).map((_, i) => (
               <a
                 href={
-                  i === 0 ? `${SITE_ROOT}/posts` : `${SITE_ROOT}/posts/${i + 1}`
+                  i === 0 ? `${SITE_ROOT}posts` : `${SITE_ROOT}posts/${i + 1}`
                 }
                 class={`w-10 h-10 flex items-center justify-center rounded-md ${
                   page.currentPage === i + 1

@@ -4,7 +4,7 @@ import { SITE_ROOT } from "../consts";
 
 <header class="sticky top-0 z-50">
   <nav
-    class="border-b bg-neutral-50 border-gray-200 max-w-4xl mx-auto px-4 py-3 flex items-center min-h-16"
+    class="border-b bg-neutral-50 border-gray-200 max-w-4xl mx-auto px-4 py-3 flex items-center min-h-16 relative"
   >
     <div class="flex items-center justify-between w-full">
       <a
@@ -12,8 +12,10 @@ import { SITE_ROOT } from "../consts";
         class="text-xl md:text-2xl font-extrabold text-gray-800 tracking-tight hover:text-blue-600 transition-colors"
         >citizenmammoth_</a
       >
+      
+      <!-- Desktop Navigation -->
       <div
-        class="flex items-center gap-2 md:gap-4 lg:gap-6"
+        class="hidden md:flex items-center gap-4 lg:gap-6"
         style="transition:all .2s"
       >
         <a
@@ -36,6 +38,96 @@ import { SITE_ROOT } from "../consts";
           About
         </a>
       </div>
+
+      <!-- Mobile Hamburger Button -->
+      <button
+        id="mobile-menu-button"
+        type="button"
+        class="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+        aria-label="Toggle mobile menu"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Menu -->
+    <div
+      id="mobile-menu"
+      class="md:hidden absolute top-full left-0 right-0 bg-white border-b border-gray-200 shadow-lg transform -translate-y-full opacity-0 transition-all duration-300 ease-in-out pointer-events-none"
+    >
+      <div class="px-4 py-2 space-y-1">
+        <a
+          href={`${SITE_ROOT}posts`}
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+        >
+          Posts
+        </a>
+        <a
+          href={`${SITE_ROOT}rss.xml`}
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+          title="RSS Feed"
+        >
+          RSS
+        </a>
+        <a
+          href={`${SITE_ROOT}about`}
+          class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
+        >
+          About
+        </a>
+      </div>
     </div>
   </nav>
 </header>
+
+<script>
+  // Mobile menu functionality
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  let isMenuOpen = false;
+
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      isMenuOpen = !isMenuOpen;
+      
+      if (isMenuOpen) {
+        mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
+        mobileMenu.classList.add('translate-y-0', 'opacity-100');
+        // Change hamburger to X
+        mobileMenuButton.innerHTML = `
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        `;
+      } else {
+        mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+        mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+        // Change X back to hamburger
+        mobileMenuButton.innerHTML = `
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        `;
+      }
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (isMenuOpen && !mobileMenuButton.contains(e.target as Node) && !mobileMenu.contains(e.target as Node)) {
+        isMenuOpen = false;
+        mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+        mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+        mobileMenuButton.innerHTML = `
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        `;
+      }
+    });
+  }
+</script>
