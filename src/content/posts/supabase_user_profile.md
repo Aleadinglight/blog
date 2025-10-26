@@ -7,7 +7,7 @@ tags: ['case-study', 'database', 'system-design']
 ---
 # Supabase Automatic Profile Creation
 
-Supabase provides us with the `auth.users` table for authentication, but now we want to create a user profile in the `public.profiles` table whenever a new user is added to the system.
+Supabase provides us with the `auth.users` table for authentication, but we usually need more than that. To store more information about the user, we should create a new table `public.user_profiles`. How should this table behave and how should it integrate nicely with the authentication table? In this post we will learn about this. The main idea here can also be applied to other platform.
 
 What are we trying to achieve:
 - Create a secure table that is linked to authentication
@@ -22,7 +22,7 @@ The first step is to create a profiles table that will store additional user inf
 
 ```sql
 -- Create the profiles table
-CREATE TABLE profiles (
+CREATE TABLE user_profiles (
   id UUID REFERENCES auth.users ON DELETE CASCADE,
   full_name TEXT,
   username TEXT UNIQUE,
@@ -45,18 +45,18 @@ Next we need to set up Row Level Security to control who can access and modify p
 
 ```sql
 -- Enable Row Level Security
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
 
 -- Anyone can view profiles
-CREATE POLICY "Public profiles are viewable by everyone" ON profiles
+CREATE POLICY "Public profiles are viewable by everyone" ON user_profiles
   FOR SELECT USING (true);
 
 -- Users can create their own profile
-CREATE POLICY "Users can insert their own profile" ON profiles
+CREATE POLICY "Users can insert their own profile" ON user_profiles
   FOR INSERT WITH CHECK (auth.uid() = id);
 
 -- Users can update their own profile  
-CREATE POLICY "Users can update own profile" ON profiles
+CREATE POLICY "Users can update own profile" ON user_profiles
   FOR UPDATE USING (auth.uid() = id);
 ```
 
@@ -79,7 +79,7 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-  INSERT INTO public.profiles (id)
+  INSERT INTO public.user_profiles (id)
   VALUES (NEW.id);
   RETURN NEW;
 END;
@@ -111,7 +111,7 @@ Here is the complete SQL setup that you can run in your Supabase SQL Editor:
 
 ```sql
 -- Create the profiles table
-CREATE TABLE profiles (
+CREATE TABLE user_profiles (
   id UUID REFERENCES auth.users ON DELETE CASCADE,
   full_name TEXT,
   username TEXT UNIQUE,
@@ -122,16 +122,16 @@ CREATE TABLE profiles (
 );
 
 -- Enable Row Level Security
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_profiles ENABLE ROW LEVEL SECURITY;
 
 -- Security policies
-CREATE POLICY "Public profiles are viewable by everyone" ON profiles
+CREATE POLICY "Public profiles are viewable by everyone" ON user_profiles
   FOR SELECT USING (true);
 
-CREATE POLICY "Users can insert their own profile" ON profiles
+CREATE POLICY "Users can insert their own profile" ON user_profiles
   FOR INSERT WITH CHECK (auth.uid() = id);
 
-CREATE POLICY "Users can update own profile" ON profiles
+CREATE POLICY "Users can update own profile" ON user_profiles
   FOR UPDATE USING (auth.uid() = id);
 
 -- Auto-creation function
@@ -142,7 +142,7 @@ SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-  INSERT INTO public.profiles (id)
+  INSERT INTO public.user_profiles (id)
   VALUES (NEW.id);
   RETURN NEW;
 END;
@@ -158,29 +158,8 @@ CREATE TRIGGER on_auth_user_created
 
 The workflow after implementing this setup:
 1. When a user signs up through your application, Supabase creates an entry in the `auth.users` table
-2. Our trigger automatically fires and creates a blank profile in the `profiles` table with the same ID
+2. Our trigger automatically fires and creates a blank profile in the `user_profiles` table with the same ID
 3. The user can then fill out their profile information like full name, username, bio, and avatar
 4. Other users can view profiles throughout the application, but each user can only edit their own profile data
 
 **End result:** Every user automatically gets a customizable profile with proper security controls in place, and you don't have to remember to create profiles manually in your application code.
-
-## Future potential change
-
-Future Organization Restrictions:
-When you're ready to restrict by organization, you can:
-
-Add organization fields to profiles table:
-```sql
-ALTER TABLE profiles ADD COLUMN organization_id UUID;
-```
-
-Update the RLS policy to check organization membership:
-```sql
-CREATE POLICY "Profiles viewable by org members" ON profiles
-FOR SELECT USING (
-  organization_id IN (
-    SELECT organization_id FROM user_organizations 
-    WHERE user_id = auth.uid()
-  )
-);
-```

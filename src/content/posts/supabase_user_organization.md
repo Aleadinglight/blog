@@ -40,7 +40,7 @@ CREATE TABLE organizations (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   description TEXT,
-  logo_url TEXT,
+  logo_url TEXT
 );
 ```
 
