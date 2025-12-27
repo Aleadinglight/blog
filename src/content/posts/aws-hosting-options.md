@@ -8,7 +8,7 @@ tags: ['frontend', 'hosting', 'aws', 'cdn', 'security']
 
 So you want to host a simple static website (with no hassle of APIs or heavy backend services), but you don't want to rely on online services like Vercel or Netlify and decided to dive in and do it yourself on AWS. This document outlines the two main approaches for hosting static frontend applications on AWS and explains our architectural decision.
 
-### Option 1: Simple CloudFront + Public S3 Bucket
+## Option 1: Simple CloudFront + Public S3 Bucket
 The user visits your website by typing in the URL and your browser connects to CloudFront, which then grabs the files from S3 and serves them to you. 
 
 ```shell
