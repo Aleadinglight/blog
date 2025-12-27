@@ -36,11 +36,10 @@ const randomQuotes = getRandomItems(quotes, 3);
       {
         randomQuotes.map((quote, index) => (
           <div
-            class={`mt-${index === 0 ? "4" : "6"} border-l-2 border-gray-200 pl-4`}
+            class={`mt-${index === 0 ? "4" : "6"} border-l-2 border-gray-200 pl-4 my-4`}
           >
             <blockquote>
               <a
-                href={quote.url}
                 target="_blank"
                 class="hover:text-blue-800 hover:underline text-gray-600 italic leading-relaxed"
               >
