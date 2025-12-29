@@ -1,6 +1,6 @@
 ---
-title: 'How to host your static frontend codes using AWS'
-description: "Simple static hosting options from AWS, and which one should you choose"
+title: 'Simple Static Hosting Options For AWS Applications'
+description: "How to easily host your static website using the services from AWS, and what to consider"
 pubDate: '2025-12-27'
 heroImage: ''
 tags: ['frontend', 'hosting', 'aws', 'cdn', 'security']
