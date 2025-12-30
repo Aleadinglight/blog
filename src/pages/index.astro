@@ -24,7 +24,7 @@ const featuredPosts = allPosts
 <Base title="Home">
   {/* Placeholder for hero image or loading animation */}
   <div class="w-full flex justify-center my-6">
-    <div class="w-200 h-50 bg-gray-200 rounded-md overflow-hidden flex items-center justify-center">
+    <div class="w-full max-w-4xl h-32 sm:h-48 md:h-64 bg-gray-200 rounded-md overflow-hidden flex items-center justify-center">
       
     </div>
   </div>
@@ -109,11 +109,11 @@ const featuredPosts = allPosts
 
   <!-- Search Modal with blurry background -->
   <div id="search-modal" class="fixed inset-0 backdrop-blur-sm bg-white/30 hidden z-50">
-    <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="flex items-center justify-center min-h-screen p-4" id="search-modal-backdrop">
       <div class="bg-white rounded-lg shadow-xl w-full max-w-4xl max-h-[80vh] overflow-hidden border border-gray-200">
         <div class="flex items-center justify-between px-4 py-2">
           <h2 class="text-xl font-semibold text-gray-800">Search Posts</h2>
-          <button id="close-search" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+          <button id="close-search" class="text-gray-500 hover:text-gray-700 text-2xl" aria-label="Close search modal" >&times;</button>
         </div>
         <div class="p-4 overflow-y-auto max-h-[calc(80vh-80px)]" id="search-content">
           <SearchComponent />
@@ -123,11 +123,12 @@ const featuredPosts = allPosts
   </div>
 </Base>
 
-<script>
+<script is:inline>
   // Modal functionality
   const searchTrigger = document.getElementById('search-trigger');
   const searchModal = document.getElementById('search-modal');
   const closeSearch = document.getElementById('close-search');
+  const searchModalBackdrop = document.getElementById('search-modal-backdrop');
 
   searchTrigger?.addEventListener('click', () => {
     searchModal?.classList.remove('hidden');
@@ -140,12 +141,14 @@ const featuredPosts = allPosts
   };
 
   closeSearch?.addEventListener('click', closeModal);
+  searchModalBackdrop?.addEventListener('click', closeModal);
 
   // Close modal when clicking anywhere outside the search content area
   searchModal?.addEventListener('click', (e) => {
     const searchContent = document.getElementById('search-content');
     // Close if clicking on the backdrop or outside the search content
-    if (e.target === searchModal || (searchContent && !searchContent.contains(e.target as Node))) {
+    const target = e.target;
+    if (target === searchModal || (searchContent && target instanceof Node && !searchContent.contains(target))) {
       closeModal();
     }
   });
