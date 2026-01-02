@@ -14,7 +14,7 @@ export async function getStaticPaths({
   );
 
   // Generate pages with 9 posts per page
-  return paginate(allPosts, { pageSize: 10});
+  return paginate(allPosts, { pageSize: 10 });
 }
 
 // The page data is available through the props
@@ -25,6 +25,38 @@ type Props = {
   page: Page<CollectionEntry<"posts">>;
 };
 
+const allPosts = await getCollection("posts");
+
+const monthCounts = new Map<string, number>();
+allPosts.forEach((post) => {
+  const date = new Date(post.data.pubDate); // converts string/timestamp to Date
+  const monthKey: string = date.toLocaleString("en-US", { month: "short", year: "numeric" }); // e.g., "Jan 2025"
+
+  monthCounts.set(monthKey, (monthCounts.get(monthKey) || 0) + 1);
+}, {});
+
+const postCount = allPosts.flatMap((post) =>
+  post.data.tags.map((tag) => ({
+    title: post.data.title,
+    pubDate: post.data.pubDate,
+  }))
+);
+
+// Count number of posts for each pubDate (by date string)
+const postCountPerPubDate = allPosts.reduce(
+  (acc, post) => {
+    const dateStr = post.data.pubDate.toISOString().split("T")[0]; // "YYYY-MM-DD"
+    acc[dateStr] = (acc[dateStr] || 0) + 1;
+    return acc;
+  },
+  {} as Record<string, number>
+);
+
+const chartData = {
+  label: Array.from(monthCounts.keys()),
+  data: Array.from(monthCounts.values()),
+};
+
 // Simple date formatter function
 // Using built-in toDateString() instead of custom formatDate function
 // since we're now using post.data.pubDate.toDateString() directly
@@ -32,11 +64,14 @@ type Props = {
 
 <Base>
   <main class="max-w-4xl mx-auto px-4 py-6">
+    <canvas
+      id="myChart"
+      class="mx-auto max-w-4xl h-100 p-8"
+      data-chartdata={JSON.stringify(chartData)}></canvas>
+
     <section>
       <div class="space-y-6 mb-8 max-w-2xl mx-auto">
-        {page.data.map((post) => (
-          <PostCard post={post} />
-        ))}
+        {page.data.map((post) => <PostCard post={post} />)}
       </div>
 
       {/* Pagination Controls */}
@@ -101,3 +136,23 @@ type Props = {
     </section>
   </main>
 </Base>
+
+<script>
+  import Chart from "chart.js/auto";
+
+  const ctx: any = document.getElementById("myChart");
+  const chartData = JSON.parse(ctx.dataset.chartdata || "{}");
+  console.log(chartData);
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: chartData.label,
+      datasets: [
+        {
+          label: "Posts per month",
+          data: chartData.data,
+        },
+      ],
+    },
+  });
+</script>
