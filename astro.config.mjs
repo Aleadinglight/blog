@@ -13,22 +13,15 @@ export default defineConfig({
   site: 'https://aleadinglight.github.io',
   base: '/blog/',
   integrations: [
-    expressiveCode(), 
+    expressiveCode({
+      themes: ['one-light'],
+    }), 
     mdx(), 
     sitemap(), 
     pagefind()
   ],
   
   markdown: {
-    syntaxHighlight: 'shiki',
-    shikiConfig: {
-      themes: {
-        light: 'one-light', // Optional: add light mode support
-        dark: 'github-dark'  // Optional: add dark mode support
-      },
-      defaultColor: 'light',
-      wrap: true
-    },
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
   },
