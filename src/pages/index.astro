@@ -133,6 +133,10 @@ const featuredPosts = allPosts
   searchTrigger?.addEventListener('click', () => {
     searchModal?.classList.remove('hidden');
     document.body.style.overflow = 'hidden';
+    setTimeout(() => {
+      const input = searchModal?.querySelector('.pagefind-ui input[type="text"]');
+      if (input instanceof HTMLInputElement) input.focus();
+    }, 50);
   });
 
   const closeModal = () => {
