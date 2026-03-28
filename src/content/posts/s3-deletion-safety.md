@@ -11,9 +11,7 @@ When building cloud applications, it's tempting to optimize for convenience. Aut
 
 ## The dangerous side of automation
 
-It's just another Tuesday and the manager hands you a list of old AWS stacks that might be cleaned up. After some researches, you decided that nothing is worth keeping, and even if it is, you can just re-create the AWS stack again. So you run `cdk destroy` or `terraform destroy` and the command completes successfully. Minutes later, you get a message from another team informing that you just deleted an important S3 bucket with thousands of user files, because it was linked to your stack.
-
-This has happened to experienced engineers. It will happen again.
+Some commands, while convenience, are destructive. For example, `cdk destroy` is the easiest way to deprecate a stack, but it is also the easiest way to delete an S3 bucket with thousands of user files, because it was linked to your stack.
 
 ## Manual intervention 
 
@@ -41,20 +39,18 @@ The bucket survives stack deletion entirely. You must manually delete it later t
 
 ## The Real Cost of Convenience
 
-When you enable `autoDeleteObjects: true` (Option 1) for production buckets, you're trading safety for convenience. That trade might seem reasonable until you consider:
+When you enable `autoDeleteObjects: true` in **Option 1** for production buckets, you're trading safety for convenience. That trade might seem reasonable until you consider:
 
 - Customer files lost permanently
 - Compliance violations from premature data deletion  
 - Hours of incident response and customer communication
 - Potential revenue impact and reputation damage
 
-Is saving 30 seconds of manual work worth that risk?
+Saving 30 seconds does not worth the risks.
 
 ## The sweet spot for automation while still requiring minimal manual intervention
 
-For most production applications storing user data, Option 2 provides the right balance. It prevents accidental deletion: that failed stack error is your safety net. When CloudFormation says "cannot delete non-empty bucket," you stop and think about what you're doing.
-
-This, however, isn't a burden like you would think. You only deal with this once: when deliberately tearing down the stack. Unlike daily operations, this is a rare, intentional action. Unlike Option 3 (`RETAIN`), the bucket eventually gets deleted. You don't accumulate orphaned resources across AWS accounts.
+For most production applications storing user data, **Option 2** provides the right balance. It prevents accidental deletion: that failed stack error is your safety net. When CloudFormation says "cannot delete non-empty bucket," you stop and think about what you're doing. This isn't a burden because we only deal with this once: when deliberately deleting the stack -  a rare, intentional action. This is also better than **Option 3** (`RETAIN`), since the bucket eventually gets deleted. You don't accumulate orphaned resources across AWS accounts.
 
 
 ## What to consider?
