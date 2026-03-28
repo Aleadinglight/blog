@@ -39,10 +39,10 @@ const { post, highlightTag } = Astro.props;
         {post.data.tags.map((tag) => (
           <a
             href={`${SITE_ROOT}tags/${tag}`}
-            class={`inline-flex ml-1 items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset transition-colors ${
+            class={`inline-flex ml-0 mr-1 items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset transition-colors ${
               highlightTag && tag === highlightTag
                 ? 'bg-blue-100 text-blue-700 ring-blue-200'
-                : 'bg-gray-50 text-gray-600 ring-gray-500/10 hover:bg-blue-50 hover:text-blue-700'
+                : 'bg-gray-100 text-gray-600 ring-gray-500/10 hover:bg-blue-100 hover:text-blue-600'
             }`}
           >
             {tag}
