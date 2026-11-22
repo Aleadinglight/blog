@@ -1,10 +1,8 @@
-- There should be 2 sections: wanting features (features that I want to add), and the other one is change log
-- Change log should be linked to the post of how did I implemented the changes.
-- Wanted features should just be a files that can be edited easily.
-- Should be able to highlights all the new changes here
+# Changelog
 
-- Image optimization
-- Group posts by series
-- Tag filtering/searching
-- Static in page search
-- xml file
+Notable changes to the blog, newest first. Link each entry to the post that explains it, when there is one.
+Planned features live in [`TODO.md`](./TODO.md).
+
+## 2026-11-22
+
+- Added `AGENTS.md`, `CLAUDE.md`, `TODO.md` and `PLAN.md`; moved the feature wishlist out of this file.
